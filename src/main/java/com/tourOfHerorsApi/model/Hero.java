@@ -18,5 +18,5 @@ public class Hero implements Serializable {
     @Column(nullable = false, updatable = false)
     private Long id;
 
-    private String Name;
+    private String heroName;
 }
