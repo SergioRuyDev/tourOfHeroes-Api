@@ -2,7 +2,7 @@ package com.tourOfHerorsApi.service;
 
 import com.tourOfHerorsApi.exception.HeroNotFoundException;
 import com.tourOfHerorsApi.model.Hero;
-import com.tourOfHerorsApi.repository.HeroesRepo;
+import com.tourOfHerorsApi.repository.HeroRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,22 +15,26 @@ import java.util.UUID;
 @AllArgsConstructor
 public class HeroesService {
 
-    private final HeroesRepo heroesRepo;
+    private final HeroRepo heroRepo;
 
-    public Hero addHero(Hero heroes) {
-        heroes.setName(UUID.randomUUID().toString());
-        return heroesRepo.save(heroes);
+    public Hero addHero(Hero hero) {
+        hero.setName(UUID.randomUUID().toString());
+        return heroRepo.save(hero);
     }
 
     public List<Hero> findAllHeroes() {
-        return heroesRepo.findAll();
+        return heroRepo.findAll();
     }
 
     public Hero findHeroById(Long id) {
-        return heroesRepo.findById(id).orElseThrow(() -> new HeroNotFoundException("Hero by id " + id + " was not found."));
+        return heroRepo.findById(id).orElseThrow(() -> new HeroNotFoundException("Hero by id " + id + " was not found."));
+    }
+
+    public Hero updateHero(Hero hero) {
+        return heroRepo.save(hero);
     }
 
     public void deleteHero(Long id) {
-        heroesRepo.deleteById(id);
+        heroRepo.deleteById(id);
     }
 }

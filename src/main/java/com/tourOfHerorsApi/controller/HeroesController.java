@@ -5,16 +5,14 @@ import com.tourOfHerorsApi.service.HeroesService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/heroes")
 @AllArgsConstructor
+@CrossOrigin(origins = "*")
 public class HeroesController {
 
     private final HeroesService heroesService;
@@ -31,6 +29,23 @@ public class HeroesController {
         return new ResponseEntity<>(hero, HttpStatus.OK);
     }
 
+    @PostMapping("/add")
+    public ResponseEntity<Hero> addHero(@RequestBody Hero hero) {
+        Hero newHero = heroesService.addHero(hero);
+        return new ResponseEntity<>(newHero, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<Hero> updateHero(@RequestBody Hero hero) {
+        Hero updateHero = heroesService.updateHero(hero);
+        return new ResponseEntity<>(updateHero, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteHero(@PathVariable("id") Long id) {
+        heroesService.deleteHero(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
 }
