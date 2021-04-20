@@ -1,5 +1,6 @@
 package com.tourOfHerorsApi.service;
 
+import com.tourOfHerorsApi.exception.HeroNotFoundException;
 import com.tourOfHerorsApi.model.Heroes;
 import com.tourOfHerorsApi.repository.HeroesRepo;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,10 @@ public class HeroesService {
     }
 
     public  Heroes findHeroById(Long id) {
+        return heroesRepo.findById(id).orElseThrow(() -> new HeroNotFoundException("Hero by id " + id + " was not found."));
+    }
 
+    public void deleteHero(Long id) {
+        heroesRepo.deleteById(id);
     }
 }
